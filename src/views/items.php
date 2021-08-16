@@ -8,21 +8,17 @@ $uriSections = explode('/', $_SERVER['REQUEST_URI']);
 if (sizeof($uriSections) > 3) {
   header("Location: /");
 }
+$search = filter_var($uriSections[2], FILTER_SANITIZE_STRING); 
 
 // establish our db connection
 $db = new Database();
 $db->connect();
-
-// initiate query
-$query = $db->link->prepare("SELECT * FROM stock WHERE (stock_name = ?) AND (in_stock != 0)");
-$search = filter_var($uriSections[2], FILTER_SANITIZE_STRING); 
-$query->bind_param("s", $search);
-$query->execute();
-$query->store_result();
+$db->selectDatabase();
+$results = $db->fetchStock($search);
 $db->disconnect();
 
 // stock in database?
-if ($query->num_rows === 0) {
+if (sizeof($results) === 0) {
     // wasnt in list, send them away
     header("Location: /");
 }
@@ -42,30 +38,30 @@ if ($query->num_rows === 0) {
                     </p>
                 </div>
             </section>
-            <?php
-                mysqli_stmt_bind_result($query, $stock_id, $stock_name, $image_path, $stock_story, $image_large, $in_stock);
-                $i = 0;
-                while (mysqli_stmt_fetch($query)) {
-                    $normalStory = convertToNormal($stock_story);
-                    $normalSearch = convertToNormal($search);
-                    if ($i % 4 === 0) echo "<section class='row'>";
-                    echo "<div class='column-quarter'>
-                        <a href='/public/${image_large}' class='stock-card'>
-                            <img class='stock-image' src='/public/${image_path}' alt='Image ID ${stock_id}'>
-                            <h4 class='stock-title'>
-                                ${normalStory}
-                            </h4>
-                            <p class='stock-description'>
-                                ID: ${stock_id}
-                            </p>
-                        </a>
-                    </div>";
-                    if ($i % 4 === 3) echo "</section>";
-                    $i++;
-                }
-                
-                if ($i % 4 !== 0) echo "</section>";
-            ?>
+            <?php for ($rowCount = 0; $rowCount < (ceil(sizeof($results) / 4)); $rowCount++) { ?>
+                <section class='row'>
+                    <?php for ($itemCount = 0; $itemCount < 4; $itemCount++) { ?>
+                        <?php 
+                            $currentRow = ($rowCount * 4) + $itemCount;
+                            if ($currentRow === sizeof($results)) break;
+                        ?>
+                        <div class='column-quarter'>
+                            <a href='/public/<?php echo $results[$currentRow]["image_large"]; ?>' class='stock-card'>
+                                <img
+                                    class='stock-image'
+                                    src='/public/<?php echo $results[$currentRow]["image_path"]; ?>'
+                                    alt='Image ID <?php echo $results[$currentRow]["stock_id"]; ?>'>
+                                <h4 class='stock-title'>
+                                    <?php echo convertToNormal($results[$currentRow]["stock_story"]); ?>
+                                </h4>
+                                <p class='stock-description'>
+                                    ID: <?php echo $results[$currentRow]["stock_id"]; ?>
+                                </p>
+                            </a>
+                        </div>
+                    <?php } ?>
+                </section>
+            <?php } ?>
         </main>
         <?php require(__DIR__ . '/../partials/footer.php');?>
     </body>

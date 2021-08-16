@@ -7,6 +7,7 @@ require_once(__DIR__ . "/../utils/strings.php");
 $database = new Database();
 $database->connect();
 $database->createDatabase();
+$database->selectDatabase();
 $database->recreateStockTable();
 
 // create the iterator to traverse our stock directory

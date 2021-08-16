@@ -13,14 +13,16 @@ class Database {
             exit();
         }
 
-        // select the database as the default for future queries
-        $this->link->select_db($_ENV["DB_DATABASE"]);
-
         return $this->link;
     }
 
+    // select the database as the default for future queries
+    function selectDatabase () {
+        $this->link->select_db($_ENV["DB_DATABASE"]);
+    }
+
+    // create our default database
     function createDatabase () {
-        // make sure the database exists
         $this->link->query("CREATE DATABASE IF NOT EXISTS " . $_ENV["DB_DATABASE"]);
     }
 
@@ -49,6 +51,14 @@ class Database {
         $query = $this->link->prepare("INSERT INTO stock (stock_id, stock_name, image_path, stock_story, image_large, in_stock) VALUES (?, ?, ?, ?, ?, ?)");
         $query->bind_param("ssssss", $stockId, $stockName, $imageDir, $stockStory, $imageDir, $inStock);
         $query->execute();
+    }
+
+    function fetchStock ($stockName) {
+        $query = $this->link->prepare("SELECT * FROM stock WHERE (stock_name = ?) AND (in_stock != 0)");
+        $query->bind_param("s", $stockName);
+        $query->execute();
+        $rows = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $rows;
     }
 
     // close the database

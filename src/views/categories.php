@@ -7,6 +7,7 @@ $configs = include(__DIR__ . '/../utils/settings.php');
 // establish our db connection
 $db = new Database();
 $db->connect();
+$db->selectDatabase();
 
 // initiate query
 $query = $db->link->prepare("SELECT stock_name, MAX(image_path) FROM stock WHERE (in_stock != 0) GROUP BY stock_name");
