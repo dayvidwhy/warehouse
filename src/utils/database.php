@@ -61,6 +61,14 @@ class Database {
         return $rows;
     }
 
+    function fetchCategories () {
+        // initiate query
+        $query = $this->link->prepare("SELECT stock_name, MAX(image_path) FROM stock WHERE (in_stock != 0) GROUP BY stock_name");
+        $query->execute();
+        $rows = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
+
     // close the database
     function disconnect() {
         $this->link->close();

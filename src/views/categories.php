@@ -8,11 +8,7 @@ $configs = include(__DIR__ . '/../utils/settings.php');
 $db = new Database();
 $db->connect();
 $db->selectDatabase();
-
-// initiate query
-$query = $db->link->prepare("SELECT stock_name, MAX(image_path) FROM stock WHERE (in_stock != 0) GROUP BY stock_name");
-$query->execute();
-$query->store_result();
+$results = $db->fetchCategories();
 $db->disconnect();
 ?>
 <!DOCTYPE html>
@@ -23,29 +19,29 @@ $db->disconnect();
     <body>
         <?php require(__DIR__ . '/../partials/header.php');?>
         <main role="main" class="container">
-            <?php
-                mysqli_stmt_bind_result($query, $stock_name, $image_path);
-                $i = 0;
-                while (mysqli_stmt_fetch($query)) {
-                    $normalName = convertToNormal($stock_name);
-                    if ($i % 4 === 0) echo "<section class='row'>";
-                    $stock_slug = convertToSlug($stock_name);
-                    $stockType = $configs["stockType"];
-                    echo "<div class='column-quarter'>
-                        <a href='/${stockType}/${stock_slug}' class='stock-card'>
-                            <img class='stock-image' src='/public/${image_path}' alt='ID ${stock_id}'>
-                            <h4 class='stock-title'>
-                                ${normalName}
-                            </h4>
-                        </a>
-                    </div>";
-                    if ($i % 4 === 3) echo "</section>";
-                    $i++;
-                }
-
-                // we didn't close a row in the loop
-                if ($i % 4 !== 0) echo "</section>";
-            ?>
+            <?php for ($rowCount = 0; $rowCount < (ceil(sizeof($results) / 4)); $rowCount++) { ?>
+                <section class='row'>
+                    <?php for ($itemCount = 0; $itemCount < 4; $itemCount++) { ?>
+                        <?php 
+                            $currentRow = ($rowCount * 4) + $itemCount;
+                            if ($currentRow === sizeof($results)) break;
+                            $stockType = $configs["stockType"];
+                            $stock_slug = convertToSlug($results[$currentRow]["stock_name"]);
+                        ?>
+                        <div class='column-quarter'>
+                            <a href='/<?php echo $stockType; ?>/<?php echo $stock_slug; ?>' class='stock-card'>
+                                <img
+                                    class='stock-image'
+                                    src='/public/<?php echo $results[$currentRow]["MAX(image_path)"]; ?>'
+                                    alt='Image ID <?php echo $results[$currentRow]["stock_id"]; ?>'>
+                                <h4 class='stock-title'>
+                                    <?php echo convertToNormal($results[$currentRow]["stock_name"]); ?>
+                                </h4>
+                            </a>
+                        </div>
+                    <?php } ?>
+                </section>
+            <?php } ?>
         </main>
         <?php require(__DIR__ . '/../partials/footer.php');?>
     </body>
