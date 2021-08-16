@@ -1,22 +1,12 @@
 <?php 
-$uriSections = explode('/', $_SERVER['REQUEST_URI']);
-
-// if they go deeper just send them away
-if (sizeof($uriSections) > 3) {
-  header("Location: /");
-}
-
-// what story did they want
-$search = filter_var($uriSections[2], FILTER_SANITIZE_STRING); 
-
-// search the database for stocks by this id
+// require files
 require_once(__DIR__ . '/../utils/connect.php');
+require_once(__DIR__ . "/../utils/strings.php");
 $configs = include(__DIR__ . '/../utils/settings.php');
 
-// should convert a name like 'briny-sea' to 'Briney Sea'
-function convertToNormal ($slug) {
-    $slug = strtolower($slug);
-    return ucwords(implode(' ', explode('-', $slug)));
+$uriSections = explode('/', $_SERVER['REQUEST_URI']);
+if (sizeof($uriSections) > 3) {
+  header("Location: /");
 }
 
 // establish our db connection
@@ -25,6 +15,7 @@ $db->connect();
 
 // initiate query
 $query = $db->link->prepare("SELECT * FROM stock WHERE (stock_name = ?) AND (in_stock != 0)");
+$search = filter_var($uriSections[2], FILTER_SANITIZE_STRING); 
 $query->bind_param("s", $search);
 $query->execute();
 $query->store_result();

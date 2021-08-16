@@ -1,8 +1,8 @@
 <?php
 // require files
 require_once(__DIR__ . '/../utils/connect.php');
+require_once(__DIR__ . "/../utils/strings.php");
 $configs = include(__DIR__ . '/../utils/settings.php');
-
 
 // establish our db connection
 $db = new MySQLDatabase();
@@ -13,16 +13,6 @@ $query = $db->link->prepare("SELECT stock_name, MAX(image_path) FROM stock WHERE
 $query->execute();
 $query->store_result();
 $db->disconnect();
-
-function convertToSlug ($normal) {
-    return strtolower(implode('-', explode(' ', $normal)));
-}
-
-function convertToNormal ($slug) {
-    $slug = strtolower($slug);
-    return ucwords(implode(' ', explode('-', $slug)));
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
