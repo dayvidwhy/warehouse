@@ -1,5 +1,5 @@
 <?php
-class MySQLDatabase {
+class Database {
     // store a reference to our database
     var $link;
 

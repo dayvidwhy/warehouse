@@ -1,11 +1,11 @@
 <?php
 // require files
-require_once(__DIR__ . '/../utils/connect.php');
+require_once(__DIR__ . '/../utils/database.php');
 require_once(__DIR__ . "/../utils/strings.php");
 $configs = include(__DIR__ . '/../utils/settings.php');
 
 // establish our db connection
-$db = new MySQLDatabase();
+$db = new Database();
 $db->connect();
 
 // initiate query

@@ -1,14 +1,11 @@
 <?php
 // search the database for stocks by this id
-require_once(__DIR__ . '/../utils/connect.php');
+require_once(__DIR__ . '/../utils/database.php');
 require_once(__DIR__ . "/../utils/strings.php");
 
 // establish our db connection
-$db = new MySQLDatabase();
+$db = new Database();
 $db->connect();
-
-// create the iterator to traverse our stock directory
-$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . "/../public/stock"), RecursiveIteratorIterator::SELF_FIRST );
 
 $db->query("DROP TABLE IF EXISTS stock");
 
@@ -26,6 +23,9 @@ $db->query("
 
 // first delete all rows in table
 $db->query("DELETE FROM stock");
+
+// create the iterator to traverse our stock directory
+$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . "/../public/stock"), RecursiveIteratorIterator::SELF_FIRST );
 
 foreach ($iterator as $path) {
     // skip directories
