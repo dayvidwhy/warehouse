@@ -6,10 +6,14 @@ require_once(__DIR__ . "/../utils/strings.php");
 // establish our db connection
 $database = new Database();
 $database->connect();
+$database->createDatabase();
 $database->recreateStockTable();
 
 // create the iterator to traverse our stock directory
-$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . "/../public/stock"), RecursiveIteratorIterator::SELF_FIRST );
+$iterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator(__DIR__ . "/../public/stock"),
+    RecursiveIteratorIterator::SELF_FIRST
+);
 
 foreach ($iterator as $path) {
     // skip directories
