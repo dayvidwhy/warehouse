@@ -4,25 +4,9 @@ require_once(__DIR__ . '/../utils/database.php');
 require_once(__DIR__ . "/../utils/strings.php");
 
 // establish our db connection
-$db = new Database();
-$db->connect();
-
-$db->query("DROP TABLE IF EXISTS stock");
-
-$db->query("
-    CREATE TABLE IF NOT EXISTS stock (
-        stock_id varchar(40) NOT NULL,
-        stock_name varchar(40) NOT NULL,
-        image_path varchar(80) NOT NULL,
-        stock_story varchar(40) DEFAULT NULL,
-        image_large varchar(80) NOT NULL,
-        in_stock int(11) DEFAULT NULL,
-        PRIMARY KEY (stock_id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-");
-
-// first delete all rows in table
-$db->query("DELETE FROM stock");
+$database = new Database();
+$database->connect();
+$database->recreateStockTable();
 
 // create the iterator to traverse our stock directory
 $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . "/../public/stock"), RecursiveIteratorIterator::SELF_FIRST );
@@ -67,11 +51,8 @@ foreach ($iterator as $path) {
 
     // insert into the database
     $inStock = '1';
-    $query = $db->link->prepare("INSERT INTO stock (stock_id, stock_name, image_path, stock_story, image_large, in_stock) VALUES (?, ?, ?, ?, ?, ?)");
-    $query->bind_param("ssssss", $stockId, $stockName, $imageDir, $stockStory, $imageDir, $inStock);
-    $query->execute();
+    $database->addStock($stockId, $stockName, $imageDir, $stockStory, $inStock);
 }
 
-$db->disconnect();
-echo 'done';
+$database->disconnect();
 ?>
