@@ -1,0 +1,11 @@
+Options Includes FollowSymLinks MultiViews
+
+# rewrite everything besides public to index
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule . index.php [L]
+
+# error pages
+ErrorDocument 404 /views/error.php
+ErrorDocument 403 /views/error.php

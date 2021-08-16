@@ -1,0 +1,6 @@
+# mac osx files
+.DS_Store
+vendor
+src/public/stock/**
+!src/public/stock/.keep
+.env

@@ -1,0 +1,140 @@
+:root {
+    --theme-main: #5861dd;
+    --theme-secondary: #838383;
+    --type-main: #fff;
+    --type-secondary: #62666f;
+    --main-background: #fff;
+}
+
+html {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background-color: var(--theme-secondary);
+}
+
+*, :after, :before {
+    box-sizing: inherit;
+}
+
+body {
+    background-color: var(--main-background);
+}
+
+body, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: block;
+    padding: 0;
+}
+
+.banner-heading {
+    text-decoration: none;
+}
+
+.banner-actual {
+    font-size: 2em;
+    color: var(--type-main);
+    margin: 12px 0;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.banner {
+    background-color: var(--theme-secondary);
+    border-bottom: 6px solid var(--theme-main);
+}
+
+.card {
+    padding: 16px;
+}
+
+.stock-card {
+  padding: 8px;
+  text-decoration: none;
+  display: block;
+}
+
+.stock-image {
+  display: block;
+  width: 100%;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+}
+
+.stock-title {
+  color: var(--theme-secondary);
+  font-size: 1em;
+  padding-top: 8px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.stock-description {
+  color: var(--theme-secondary);
+  font-size: 14px;
+}
+
+.stock-description:last-child {
+  padding-bottom: 8px;
+}
+
+.error-link {
+  margin: 16px 4px 8px 0;
+  display: inline-block;
+  color: var(--type-main);;
+  background-color: var(--theme-main);
+  padding: 8px;
+  font-size: 1.2em;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.error-link:hover {
+  color: var(--type-secondary);
+  background-color: var(--theme-secondary);
+  text-decoration: none;
+}
+
+.breadcrumb {
+  font-size: 1.2em;
+  color: var(--theme-secondary);
+}
+
+.breadcrumb-link {
+  color: var(--theme-main)
+}
+
+.container {
+  width: 1000px;
+  margin: auto;
+}
+
+.row {
+  width: 100%;
+  clear: both;
+  overflow: auto;
+}
+
+.column-quarter {
+  width: 25%;
+  float: left;
+}
+
+.footer {
+  width: 100%;
+  overflow: auto;
+  margin-top: 16px;
+  background-color: var(--theme-secondary);
+  border-top: 6px solid var(--theme-main);
+  padding: 20px 0;
+}
+
+.footer-copyright-text {
+  text-align: left;
+  color: var(--type-main);
+  font-size: 12px;
+}
+
