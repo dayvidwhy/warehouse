@@ -1,7 +1,7 @@
 <?php
 // require files
-require_once(__DIR__ . '/../scripts/connect.php');
-$configs = include(__DIR__ . '/../scripts/settings.php');
+require_once(__DIR__ . '/../utils/connect.php');
+$configs = include(__DIR__ . '/../utils/settings.php');
 
 
 // establish our db connection

@@ -1,5 +1,5 @@
 <?php
-$configs = include(__DIR__ . '/../scripts/settings.php');
+$configs = include(__DIR__ . '/../utils/settings.php');
 ?>
 <meta charset="utf-8"> 
 <meta name="theme-color" content="#838383">

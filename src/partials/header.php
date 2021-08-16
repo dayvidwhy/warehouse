@@ -1,5 +1,5 @@
 <?php
-$configs = include(__DIR__ . '/../scripts/settings.php');
+$configs = include(__DIR__ . '/../utils/settings.php');
 ?>
 <header role="banner" class="banner">
     <div class="container">

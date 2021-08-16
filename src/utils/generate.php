@@ -1,6 +1,6 @@
 <?php
 // search the database for stocks by this id
-require_once(__DIR__ . '/../scripts/connect.php');
+require_once(__DIR__ . '/../utils/connect.php');
 
 // establish our db connection
 $db = new MySQLDatabase();

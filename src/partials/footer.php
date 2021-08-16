@@ -1,5 +1,5 @@
 <?php
-$configs = include(__DIR__ . '/../scripts/settings.php');
+$configs = include(__DIR__ . '/../utils/settings.php');
 ?>
 <footer class="footer">
     <div class="footer-copyright">

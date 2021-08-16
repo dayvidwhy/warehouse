@@ -10,8 +10,8 @@ if (sizeof($uriSections) > 3) {
 $search = filter_var($uriSections[2], FILTER_SANITIZE_STRING); 
 
 // search the database for stocks by this id
-require_once(__DIR__ . '/../scripts/connect.php');
-$configs = include(__DIR__ . '/../scripts/settings.php');
+require_once(__DIR__ . '/../utils/connect.php');
+$configs = include(__DIR__ . '/../utils/settings.php');
 
 // should convert a name like 'briny-sea' to 'Briney Sea'
 function convertToNormal ($slug) {
@@ -33,7 +33,7 @@ $db->disconnect();
 // stock in database?
 if ($query->num_rows === 0) {
     // wasnt in list, send them away
-    header("Location: /stocks");
+    header("Location: /");
 }
 ?>
 <!DOCTYPE html>

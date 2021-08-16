@@ -1,40 +1,46 @@
 <?php
+// load our dependencies
+require_once('../vendor/autoload.php');
+
+// load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // server for testing
 return call_user_func(function () {
     $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-    $publicDir = __DIR__ ;
     $uri = urldecode($uri);
-    $configs = include(__DIR__ . '/scripts/settings.php');
+    $configs = include(__DIR__ . '/utils/settings.php');
  
-    $requested = $publicDir . "/" . $uri;
+    $requested = __DIR__ . "/" . $uri;
  
     if ($uri !== "/" && file_exists($requested)) {
         return false;
     }
 
     if ($uri === "/") {
-        require_once $publicDir . "/views/categories.php";
+        require_once __DIR__ . "/views/categories.php";
         return;
     }
 
 
     if (strpos($uri, "/". $configs["stockType"] . "/") === 0) {
-        require_once $publicDir . "/views/items.php";
+        require_once __DIR__ . "/views/items.php";
         return;
     }
 
     if ($uri === "/generate") {
-        require_once $publicDir . "/scripts/generate.php";
+        require_once __DIR__ . "/utils/generate.php";
         return;
     }
 
     if ($uri === "/sitemap.xml") {
         header("Content-Type: text/xml");
-        require_once $publicDir . "/views/sitemap.php";
+        require_once __DIR__ . "/views/sitemap.php";
         return;
     }
  
-    require_once $publicDir . "/views/error.php";
+    require_once __DIR__ . "/views/error.php";
     return;
 });
 

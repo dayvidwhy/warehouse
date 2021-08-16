@@ -1,8 +1,4 @@
 <?php
-require_once('../vendor/autoload.php');
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
-$dotenv->load();
-
 class MySQLDatabase {
     // store a reference to our database
     var $link;
