@@ -42,15 +42,13 @@ if ($query->num_rows === 0) {
                 </p>
             </div>
         </section>
-        <section class="row">
         <?php
             mysqli_stmt_bind_result($query, $stock_id, $stock_name, $image_path, $stock_story, $image_large, $in_stock);
             $i = 0;
             while (mysqli_stmt_fetch($query)) {
                 $normalStory = convertToNormal($stock_story);
                 $normalSearch = convertToNormal($search);
-                if ($i % 4 === 0) echo "<div class='row'>";
-                if ($i % 2 === 0) echo "<div class='con-col'>";
+                if ($i % 4 === 0) echo "<section class='row'>";
                 echo "<div class='column-quarter'>
                     <a href='/public/${image_large}' class='stock-card'>
                         <img class='stock-image' src='/public/${image_path}' alt='Image ID ${stock_id}'>
@@ -62,16 +60,12 @@ if ($query->num_rows === 0) {
                         </p>
                     </a>
                 </div>";
-                if ($i % 2 === 1) echo "</div>";
-                if ($i % 4 === 3) echo "</div>";
+                if ($i % 4 === 3) echo "</section>";
                 $i++;
             }
             
-            // tidy row closings
-            if ($i % 2 !== 0) echo "</div>";
-            if ($i % 4 !== 0) echo "</div>";
+            if ($i % 4 !== 0) echo "</section>";
         ?>
-        </section> 
     </main>
     <?php require(__DIR__ . '/../partials/footer.php');?>
 </body>

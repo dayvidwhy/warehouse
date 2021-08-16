@@ -22,17 +22,12 @@ $db->disconnect();
 <body>
     <?php require(__DIR__ . '/../partials/header.php');?>
     <main role="main" class="container">
-        <section class="row">
         <?php
-            // bind the results
             mysqli_stmt_bind_result($query, $stock_name, $image_path);
             $i = 0;
             while (mysqli_stmt_fetch($query)) {
                 $normalName = convertToNormal($stock_name);
-                // start of a row
-                if ($i % 4 === 0) echo "<div class='row'>";
-                // start of a control column
-                if ($i % 2 === 0) echo "<div class='con-col'>";
+                if ($i % 4 === 0) echo "<section class='row'>";
                 $stock_slug = convertToSlug($stock_name);
                 $stockType = $configs["stockType"];
                 echo "<div class='column-quarter'>
@@ -43,20 +38,13 @@ $db->disconnect();
                         </h4>
                     </a>
                 </div>";
-                // end of a control column
-                if ($i % 2 === 1) echo "</div>";
-                // end of a row
-                if ($i % 4 === 3) echo "</div>";
-                // bu
+                if ($i % 4 === 3) echo "</section>";
                 $i++;
             }
 
-            // we didn't close con-col in the loop
-            if ($i % 2 !== 0) echo "</div>";
             // we didn't close a row in the loop
-            if ($i % 4 !== 0) echo "</div>";
+            if ($i % 4 !== 0) echo "</section>";
         ?>
-        </section>
     </main>
     <?php require(__DIR__ . '/../partials/footer.php');?>
 </body>
