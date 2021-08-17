@@ -11,10 +11,8 @@ $database->selectDatabase();
 $database->recreateStockTable();
 
 // create the iterator to traverse our stock directory
-$iterator = new RecursiveIteratorIterator(
-    new RecursiveDirectoryIterator(__DIR__ . "/../public/stock"),
-    RecursiveIteratorIterator::SELF_FIRST
-);
+$directory = new RecursiveDirectoryIterator(__DIR__ . "/../public/stock");
+$iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
 
 foreach ($iterator as $path) {
     // skip directories
