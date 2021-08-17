@@ -1,4 +1,8 @@
 {
+    "name": "dayvidwhy/warehouse",
+    "description": "A simple warehouse display for a folder of images",
+    "keywords": ["warehouse", "docker"],
+    "license": "MIT",
     "require": {
         "vlucas/phpdotenv": "^5.3"
     }
