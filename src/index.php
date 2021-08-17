@@ -15,7 +15,7 @@ return call_user_func(function () {
     $configs = include(__DIR__ . '/utils/settings.php');
  
     if ($uri === "/") {
-        require_once __DIR__ . "/views/categories.php";
+        require_once __DIR__ . "/views/wares.php";
         return;
     }
 
