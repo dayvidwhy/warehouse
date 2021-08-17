@@ -83,7 +83,7 @@ main {
 .error-link {
   margin: 16px 4px 8px 0;
   display: inline-block;
-  color: var(--type-main);;
+  color: var(--type-main);
   background-color: var(--theme-main);
   padding: 8px;
   font-size: 1.2em;
