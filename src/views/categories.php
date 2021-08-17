@@ -19,6 +19,11 @@ $db->disconnect();
     <body>
         <?php require(__DIR__ . '/../partials/header.php');?>
         <main role="main" class="container">
+            <section class="row">
+                <p class="breadcrumb">
+                    <a class="breadcrumb-link" href="/"><?php echo ucfirst($configs["stockType"]); ?></a>
+                </p>
+            </section>
             <?php for ($rowCount = 0; $rowCount < (ceil(sizeof($results) / 4)); $rowCount++) { ?>
                 <section class='row'>
                     <?php for ($itemCount = 0; $itemCount < 4; $itemCount++) { ?>

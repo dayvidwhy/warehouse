@@ -32,11 +32,9 @@ if (sizeof($results) === 0) {
         <?php require(__DIR__ . '/../partials/header.php');?>
         <main role="main" class="container">
             <section class="row">
-                <div class="card">
-                    <p class="breadcrumb">
-                        <a class="breadcrumb-link" href="/"><?php echo ucfirst($configs["stockType"]); ?></a> - <?php echo convertToNormal($search);?>
-                    </p>
-                </div>
+                <p class="breadcrumb">
+                    <a class="breadcrumb-link" href="/"><?php echo ucfirst($configs["stockType"]); ?></a> - <?php echo convertToNormal($search);?>
+                </p>
             </section>
             <?php for ($rowCount = 0; $rowCount < (ceil(sizeof($results) / 4)); $rowCount++) { ?>
                 <section class='row'>

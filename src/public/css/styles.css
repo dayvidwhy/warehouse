@@ -9,7 +9,7 @@
 html {
     box-sizing: border-box;
     font-family: sans-serif;
-    background-color: var(--theme-secondary);
+    background-color: var(--main-background);
 }
 
 *, :after, :before {
@@ -36,15 +36,14 @@ main {
 
 .banner-actual {
     font-size: 2em;
-    color: var(--type-main);
+    color: var(--type-secondary);
     margin: 12px 0;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 200;
 }
 
 .banner {
-    background-color: var(--theme-secondary);
-    border-bottom: 6px solid var(--theme-main);
+    border-bottom: 2px solid var(--theme-main);
 }
 
 .card {
@@ -92,6 +91,14 @@ main {
   text-decoration: none;
 }
 
+.column-quarter:first-child > .stock-card {
+  padding-left: 0;
+}
+
+.column-quarter:last-child > .stock-card {
+  padding-right: 0;
+}
+
 .error-link:hover {
   color: var(--type-secondary);
   background-color: var(--theme-secondary);
@@ -100,11 +107,13 @@ main {
 
 .breadcrumb {
   font-size: 1.2em;
+  padding: 24px 0;
   color: var(--theme-secondary);
 }
 
 .breadcrumb-link {
-  color: var(--theme-main)
+  color: var(--theme-main);
+  text-decoration: none;
 }
 
 .container {
@@ -127,14 +136,14 @@ main {
   width: 100%;
   overflow: auto;
   margin-top: 16px;
-  background-color: var(--theme-secondary);
-  border-top: 6px solid var(--theme-main);
+  background-color: var(--main-background);
+  border-top: 2px solid var(--theme-main);
   padding: 20px 0;
 }
 
 .footer-copyright-text {
   text-align: left;
-  color: var(--type-main);
+  color: var(--type-secondary);
   font-size: 12px;
 }
 

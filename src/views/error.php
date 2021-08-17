@@ -11,17 +11,15 @@ $configs = include(__DIR__ . '/../utils/settings.php');
         <?php require('partials/header.php');?>
         <main role="main" class="container">
             <div class="row">
-                <div class="card">
-                    <h2 class="card-title">
-                        Page Not Found
-                    </h2>
-                    <p class="card-text">
-                        Page was not here.
-                    </p>
-                    <a class="error-link" href="/">
-                        Home
-                    </a>
-                </div>
+                <h2 class="banner-actual">
+                    Page Not Found
+                </h2>
+                <p class="card-text">
+                    Page was not here.
+                </p>
+                <a class="error-link" href="/">
+                    Home
+                </a>
             </div>
         </main>
         <?php require('partials/footer.php');?>
