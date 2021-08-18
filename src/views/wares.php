@@ -1,7 +1,5 @@
 <?php
 // require files
-require_once(__DIR__ . '/../utils/database.php');
-require_once(__DIR__ . "/../utils/strings.php");
 $configs = include(__DIR__ . '/../utils/settings.php');
 
 // establish our db connection
@@ -28,7 +26,7 @@ $results = $db->fetchCategories();
                             $currentRow = ($rowCount * 4) + $itemCount;
                             if ($currentRow === sizeof($results)) break;
                             $stockType = $configs["stockType"];
-                            $stock_slug = convertToSlug($results[$currentRow]["stock_name"]);
+                            $stock_slug = strings::convertToSlug($results[$currentRow]["stock_name"]);
                         ?>
                         <div class='column-quarter'>
                             <a href='/<?php echo $stockType; ?>/<?php echo $stock_slug; ?>' class='stock-card'>
@@ -37,7 +35,7 @@ $results = $db->fetchCategories();
                                     src='/public/<?php echo $results[$currentRow]["MAX(image_path)"]; ?>'
                                     alt='Image ID <?php echo $results[$currentRow]["stock_id"]; ?>'>
                                 <h4 class='stock-title'>
-                                    <?php echo convertToNormal($results[$currentRow]["stock_name"]); ?>
+                                    <?php echo strings::convertToNormal($results[$currentRow]["stock_name"]); ?>
                                 </h4>
                             </a>
                         </div>

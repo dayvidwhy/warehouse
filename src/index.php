@@ -1,6 +1,9 @@
 <?php
 // load our dependencies
 require_once('../vendor/autoload.php');
+spl_autoload_register(function($className) {
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/utils/' . $className . '.php';
+});
 
 // load environment variables
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);

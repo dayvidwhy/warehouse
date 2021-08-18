@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
-// utility functions
-require_once(__DIR__ . "/../utils/strings.php");
 
-class Traversal {
+class traversal {
     // tests if a file at a given path is an image type
     private function isImage(string $stockFileName): bool {
         return str_starts_with(mime_content_type($stockFileName), "image/");

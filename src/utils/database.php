@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
-class Database {
+
+class database {
     // store a reference to our database
     var $link;
 

@@ -1,11 +1,8 @@
 <?php
-require_once(__DIR__ . "/../utils/database.php");
-require_once(__DIR__ . "/../utils/traversal.php");
-
-$traversal = new Traversal();
+$traversal = new traversal();
 $imageData = $traversal->getStockImages();
 
 // establish our db connection
-$database = new Database();
+$database = new database();
 $database->addStocks($imageData);
 ?>

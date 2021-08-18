@@ -1,7 +1,5 @@
 <?php 
 // require files
-require_once(__DIR__ . '/../utils/database.php');
-require_once(__DIR__ . "/../utils/strings.php");
 $configs = include(__DIR__ . '/../utils/settings.php');
 
 $uriSections = explode('/', $_SERVER['REQUEST_URI']);
@@ -30,7 +28,7 @@ if (sizeof($results) === 0) {
         <main role="main" class="container">
             <section class="row">
                 <p class="breadcrumb">
-                    <a class="breadcrumb-link" href="/"><?php echo ucfirst($configs["stockType"]); ?></a> - <?php echo convertToNormal($search);?>
+                    <a class="breadcrumb-link" href="/"><?php echo ucfirst($configs["stockType"]); ?></a> - <?php echo strings::convertToNormal($search);?>
                 </p>
             </section>
             <?php for ($rowCount = 0; $rowCount < (ceil(sizeof($results) / 4)); $rowCount++) { ?>
@@ -47,7 +45,7 @@ if (sizeof($results) === 0) {
                                     src='/public/<?php echo $results[$currentRow]["image_path"]; ?>'
                                     alt='Image ID <?php echo $results[$currentRow]["stock_id"]; ?>'>
                                 <h4 class='stock-title'>
-                                    <?php echo convertToNormal($results[$currentRow]["stock_story"]); ?>
+                                    <?php echo strings::convertToNormal($results[$currentRow]["stock_story"]); ?>
                                 </h4>
                                 <p class='stock-description'>
                                     ID: <?php echo $results[$currentRow]["stock_id"]; ?>
