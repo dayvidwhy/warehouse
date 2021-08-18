@@ -1,16 +1,12 @@
 <?php
 // search the database for stocks by this id
-require_once(__DIR__ . '/../utils/database.php');
 require_once(__DIR__ . "/../utils/strings.php");
-
-// establish our db connection
-$database = new Database();
-$database->prepareDatabase();
 
 // create the iterator to traverse our stock directory
 $directory = new RecursiveDirectoryIterator(__DIR__ . "/../public/stock");
 $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
 
+$imageData = array();
 foreach ($iterator as $path) {
     // skip directories
     if ($path->isDir()) continue;
@@ -46,13 +42,15 @@ foreach ($iterator as $path) {
 
     // stock id is the filename minus the file extension
     if (!endsWith($stockFileName, ".png") && !endsWith($stockFileName, ".jpg")) continue;
-    print($imagePath . PHP_EOL);
+
     $stockId = substr($stockFileName, 0, strlen($stockFileName) - 4);
 
     // insert into the database
     $inStock = '1';
-    $database->addStock($stockId, $stockName, $imageDir, $stockStory, $inStock);
+    array_push($imageData, [$stockId, $stockName, $imageDir, $stockStory, $inStock]);
 }
 
-$database->disconnect();
+// establish our db connection
+$database = new Database();
+$database->addStocks($imageData);
 ?>

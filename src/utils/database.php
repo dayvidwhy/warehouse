@@ -48,6 +48,7 @@ class Database {
     }
 
     function addStock ($stockId, $stockName, $imageDir, $stockStory, $inStock) {
+        echo 'adding stock';
         $query = $this->link->prepare(<<<EOL
             INSERT INTO stock (
                 stock_id,
@@ -60,6 +61,25 @@ class Database {
         EOL);
         $query->bind_param("ssssss", $stockId, $stockName, $imageDir, $stockStory, $imageDir, $inStock);
         $query->execute();
+        var_dump($query);
+    }
+
+    function addStocks ($imageData) {
+        // var_dump($imageData);
+        $this->connect();
+        $this->createDatabase();
+        $this->selectDatabase();
+        $this->recreateStockTable();
+        for ($i = 0; $i < sizeof($imageData); $i++) {
+            $this->addStock(
+                $imageData[$i][0],
+                $imageData[$i][1],
+                $imageData[$i][2],
+                $imageData[$i][3],
+                $imageData[$i][4]
+            );
+        }
+        $this->disconnect();
     }
 
     function fetchStock ($stockName) {
@@ -89,13 +109,6 @@ class Database {
         $rows = $query->get_result()->fetch_all(MYSQLI_ASSOC);
         $this->disconnect();
         return $rows;
-    }
-
-    function prepareDatabase () {
-        $this->connect();
-        $this->createDatabase();
-        $this->selectDatabase();
-        $this->recreateStockTable();
     }
 
     // close the database
