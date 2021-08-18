@@ -51,7 +51,7 @@ class traversal {
                 $imageDir = 'stock/' . $stockName . '/' . $stockStory . '/' . $stockFileName;
             }            
 
-            $stockId = substr($stockFileName, 0, strlen($stockFileName) - 4);
+            $stockId = explode(".", $stockFileName)[0];
 
             // insert into the database
             $inStock = '1';
