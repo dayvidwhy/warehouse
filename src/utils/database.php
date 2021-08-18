@@ -63,6 +63,8 @@ class Database {
     }
 
     function fetchStock ($stockName) {
+        $this->connect();
+        $this->selectDatabase();
         $query = $this->link->prepare(<<<EOL
             SELECT * FROM stock
             WHERE (stock_name = ?)
@@ -71,11 +73,13 @@ class Database {
         $query->bind_param("s", $stockName);
         $query->execute();
         $rows = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+        $this->disconnect();
         return $rows;
     }
 
     function fetchCategories () {
-        // initiate query
+        $this->connect();
+        $this->selectDatabase();
         $query = $this->link->prepare(<<<EOL
             SELECT stock_name, MAX(image_path) FROM stock
             WHERE (in_stock != 0)
@@ -83,7 +87,15 @@ class Database {
         EOL);
         $query->execute();
         $rows = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+        $this->disconnect();
         return $rows;
+    }
+
+    function prepareDatabase () {
+        $this->connect();
+        $this->createDatabase();
+        $this->selectDatabase();
+        $this->recreateStockTable();
     }
 
     // close the database

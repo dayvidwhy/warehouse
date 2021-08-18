@@ -12,10 +12,7 @@ $search = filter_var($uriSections[2], FILTER_SANITIZE_STRING);
 
 // establish our db connection
 $db = new Database();
-$db->connect();
-$db->selectDatabase();
 $results = $db->fetchStock($search);
-$db->disconnect();
 
 // stock in database?
 if (sizeof($results) === 0) {

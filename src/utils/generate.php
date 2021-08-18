@@ -5,10 +5,7 @@ require_once(__DIR__ . "/../utils/strings.php");
 
 // establish our db connection
 $database = new Database();
-$database->connect();
-$database->createDatabase();
-$database->selectDatabase();
-$database->recreateStockTable();
+$database->prepareDatabase();
 
 // create the iterator to traverse our stock directory
 $directory = new RecursiveDirectoryIterator(__DIR__ . "/../public/stock");

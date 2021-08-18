@@ -6,10 +6,7 @@ $configs = include(__DIR__ . '/../utils/settings.php');
 
 // establish our db connection
 $db = new Database();
-$db->connect();
-$db->selectDatabase();
 $results = $db->fetchCategories();
-$db->disconnect();
 ?>
 <!DOCTYPE html>
 <html lang="en">
