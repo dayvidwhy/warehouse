@@ -12,7 +12,6 @@ class Database {
             echo "Database connection failed: " . $mysqli -> connect_error;
             exit();
         }
-
         return $this->link;
     }
 
@@ -27,12 +26,12 @@ class Database {
     }
 
     // accepts sql query
-    function query ($query) {
+    function query ($query): void {
         $this->link->query($query);
     }
 
     // reproduce the stock table with correct format
-    function recreateStockTable () {
+    function recreateStockTable (): void {
         $this->link->query("DROP TABLE IF EXISTS stock");
         $this->link->query(<<<EOL
             CREATE TABLE IF NOT EXISTS stock (

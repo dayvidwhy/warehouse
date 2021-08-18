@@ -3,15 +3,15 @@
 require_once(__DIR__ . "/../utils/strings.php");
 
 class Traversal {
-    function isImage($stockFileName) {
+    private function isImage(string $stockFileName): bool {
         return endsWith($stockFileName, ".png") || endsWith($stockFileName, ".jpg");
     }
 
-    function isDirectory ($path) {
+    private function isDirectory ($path): bool {
         return $path->isDir();
     }
 
-    function getStockImages () {
+    public function getStockImages (): array {
         // create the iterator to traverse our stock directory
         $directory = new RecursiveDirectoryIterator(__DIR__ . "/../public/stock");
         $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
