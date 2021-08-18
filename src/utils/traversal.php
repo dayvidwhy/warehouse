@@ -3,10 +3,12 @@
 require_once(__DIR__ . "/../utils/strings.php");
 
 class Traversal {
+    // tests if a file at a given path is an image type
     private function isImage(string $stockFileName): bool {
-        return endsWith($stockFileName, ".png") || endsWith($stockFileName, ".jpg");
+        return str_starts_with(mime_content_type($stockFileName), "image/");
     }
 
+    // tests if what we're iterating over is a directory
     private function isDirectory ($path): bool {
         return $path->isDir();
     }
@@ -18,11 +20,12 @@ class Traversal {
 
         $imageData = array();
         foreach ($iterator as $path) {
-            // skip directories
+            // skip directories and non image files
             if ($this->isDirectory($path)) continue;
+            $imagePath = $path->__toString();
+            if (!$this->isImage($imagePath)) continue;
 
             // found an image, get the string
-            $imagePath = $path->__toString();
             $imagePath = substr($imagePath, strpos($imagePath, ".."));
 
             // pieces of the directory
@@ -48,10 +51,7 @@ class Traversal {
                 $stockStory = $dirSplit[4];
                 $stockFileName = $dirSplit[5];
                 $imageDir = 'stock/' . $stockName . '/' . $stockStory . '/' . $stockFileName;
-            }
-
-            // did we find an image?
-            if (!$this->isImage($stockFileName)) continue;
+            }            
 
             $stockId = substr($stockFileName, 0, strlen($stockFileName) - 4);
 
