@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 // utility functions
 require_once(__DIR__ . "/../utils/strings.php");
 

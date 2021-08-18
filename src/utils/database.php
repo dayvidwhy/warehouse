@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 class Database {
     // store a reference to our database
     var $link;
 
     // connect to the database
-    function connect() {
+    private function connect() {
         $this->link = new mysqli("db", $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"]);
         
         // if the connection errored
@@ -16,24 +16,24 @@ class Database {
     }
 
     // select the database as the default for future queries
-    function selectDatabase () {
+    private function selectDatabase () {
         $this->link->select_db($_ENV["DB_DATABASE"]);
     }
 
     // create our default database
-    function createDatabase () {
-        $this->link->query("CREATE DATABASE IF NOT EXISTS " . $_ENV["DB_DATABASE"]);
+    private function createDatabase () {
+        $this->query("CREATE DATABASE IF NOT EXISTS " . $_ENV["DB_DATABASE"]);
     }
 
     // accepts sql query
-    function query ($query): void {
+    private function query ($query): void {
         $this->link->query($query);
     }
 
     // reproduce the stock table with correct format
-    function recreateStockTable (): void {
-        $this->link->query("DROP TABLE IF EXISTS stock");
-        $this->link->query(<<<EOL
+    private function recreateStockTable (): void {
+        $this->query("DROP TABLE IF EXISTS stock");
+        $this->query(<<<EOL
             CREATE TABLE IF NOT EXISTS stock (
                 stock_id varchar(40) NOT NULL,
                 stock_name varchar(40) NOT NULL,
@@ -46,8 +46,7 @@ class Database {
         EOL);
     }
 
-    function addStock ($stockId, $stockName, $imageDir, $stockStory, $inStock) {
-        echo 'adding stock';
+    private function addStock ($stockId, $stockName, $imageDir, $stockStory, $inStock) {
         $query = $this->link->prepare(<<<EOL
             INSERT INTO stock (
                 stock_id,
@@ -60,10 +59,14 @@ class Database {
         EOL);
         $query->bind_param("ssssss", $stockId, $stockName, $imageDir, $stockStory, $imageDir, $inStock);
         $query->execute();
-        var_dump($query);
     }
 
-    function addStocks ($imageData) {
+    // close the database
+    private function disconnect() {
+        $this->link->close();
+    }
+
+    public function addStocks ($imageData) {
         // var_dump($imageData);
         $this->connect();
         $this->createDatabase();
@@ -81,7 +84,7 @@ class Database {
         $this->disconnect();
     }
 
-    function fetchStock ($stockName) {
+    public function fetchStock ($stockName) {
         $this->connect();
         $this->selectDatabase();
         $query = $this->link->prepare(<<<EOL
@@ -96,7 +99,7 @@ class Database {
         return $rows;
     }
 
-    function fetchCategories () {
+    public function fetchCategories () {
         $this->connect();
         $this->selectDatabase();
         $query = $this->link->prepare(<<<EOL
@@ -108,11 +111,6 @@ class Database {
         $rows = $query->get_result()->fetch_all(MYSQLI_ASSOC);
         $this->disconnect();
         return $rows;
-    }
-
-    // close the database
-    function disconnect() {
-        $this->link->close();
     }
 }
 ?>
