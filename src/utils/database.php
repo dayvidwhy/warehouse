@@ -47,7 +47,7 @@ class database {
         EOL);
     }
 
-    private function addStock ($stockId, $stockName, $imageDir, $stockStory, $inStock) {
+    private function addStock ($stock) {
         $query = $this->link->prepare(<<<EOL
             INSERT INTO stock (
                 stock_id,
@@ -58,7 +58,14 @@ class database {
                 in_stock
             ) VALUES (?, ?, ?, ?, ?, ?)
         EOL);
-        $query->bind_param("ssssss", $stockId, $stockName, $imageDir, $stockStory, $imageDir, $inStock);
+        $query->bind_param("ssssss", 
+            $stock["stockId"],
+            $stock["stockName"],
+            $stock["imageDir"],
+            $stock["stockStory"],
+            $stock["imageDir"],
+            $stock["inStock"]
+        );
         $query->execute();
     }
 
@@ -74,13 +81,7 @@ class database {
         $this->selectDatabase();
         $this->recreateStockTable();
         for ($i = 0; $i < sizeof($imageData); $i++) {
-            $this->addStock(
-                $imageData[$i][0],
-                $imageData[$i][1],
-                $imageData[$i][2],
-                $imageData[$i][3],
-                $imageData[$i][4]
-            );
+            $this->addStock($imageData[$i]);
         }
         $this->disconnect();
     }

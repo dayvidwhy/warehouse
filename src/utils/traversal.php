@@ -55,7 +55,13 @@ class traversal {
 
             // insert into the database
             $inStock = '1';
-            array_push($imageData, [$stockId, $stockName, $imageDir, $stockStory, $inStock]);
+            array_push($imageData, array(
+                "stockId" => $stockId,
+                "stockName" => $stockName,
+                "imageDir" => $imageDir,
+                "stockStory" => $stockStory,
+                "inStock" => $inStock
+            ));
         }
         return $imageData;
     }
