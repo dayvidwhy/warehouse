@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 // require files
 $configs = include(__DIR__ . '/../utils/settings.php');
 
