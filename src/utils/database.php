@@ -5,7 +5,7 @@ class database {
     var $link;
 
     // connect to the database
-    private function connect() {
+    private final function connect(): void {
         $this->link = new mysqli("db", $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"]);
         
         // if the connection errored
@@ -13,26 +13,25 @@ class database {
             echo "Database connection failed: " . $mysqli -> connect_error;
             exit();
         }
-        return $this->link;
     }
 
     // select the database as the default for future queries
-    private function selectDatabase () {
+    private final function selectDatabase (): void {
         $this->link->select_db($_ENV["DB_DATABASE"]);
     }
 
     // create our default database
-    private function createDatabase () {
+    private final function createDatabase (): void {
         $this->query("CREATE DATABASE IF NOT EXISTS " . $_ENV["DB_DATABASE"]);
     }
 
     // accepts sql query
-    private function query ($query): void {
+    private final function query ($query): void {
         $this->link->query($query);
     }
 
     // reproduce the stock table with correct format
-    private function recreateStockTable (): void {
+    private final function recreateStockTable (): void {
         $this->query("DROP TABLE IF EXISTS stock");
         $this->query(<<<EOL
             CREATE TABLE IF NOT EXISTS stock (
@@ -47,7 +46,7 @@ class database {
         EOL);
     }
 
-    private function addStock ($stock) {
+    private final function addStock ($stock): void {
         $query = $this->link->prepare(<<<EOL
             INSERT INTO stock (
                 stock_id,
@@ -70,11 +69,11 @@ class database {
     }
 
     // close the database
-    private function disconnect() {
+    private final function disconnect(): void {
         $this->link->close();
     }
 
-    public function addStocks ($imageData) {
+    public final function addStocks ($imageData): void {
         // var_dump($imageData);
         $this->connect();
         $this->createDatabase();
@@ -86,7 +85,7 @@ class database {
         $this->disconnect();
     }
 
-    public function fetchStock ($stockName) {
+    public final function fetchStock ($stockName): array {
         $this->connect();
         $this->selectDatabase();
         $query = $this->link->prepare(<<<EOL
@@ -101,7 +100,7 @@ class database {
         return $rows;
     }
 
-    public function fetchCategories () {
+    public final function fetchCategories (): array {
         $this->connect();
         $this->selectDatabase();
         $query = $this->link->prepare(<<<EOL

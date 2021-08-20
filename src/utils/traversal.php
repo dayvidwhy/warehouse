@@ -2,16 +2,16 @@
 
 class traversal {
     // tests if a file at a given path is an image type
-    private function isImage(string $stockFileName): bool {
+    private final function isImage(string $stockFileName): bool {
         return str_starts_with(mime_content_type($stockFileName), "image/");
     }
 
     // tests if what we're iterating over is a directory
-    private function isDirectory ($path): bool {
+    private final function isDirectory ($path): bool {
         return $path->isDir();
     }
 
-    public function getStockImages (): array {
+    public final function getStockImages (): array {
         // create the iterator to traverse our stock directory
         $directory = new RecursiveDirectoryIterator(__DIR__ . "/../public/stock");
         $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
