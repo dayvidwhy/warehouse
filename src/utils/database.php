@@ -16,8 +16,8 @@ class database {
     }
 
     // select the database as the default for future queries
-    private final function selectDatabase (): void {
-        $this->link->select_db($_ENV["DB_DATABASE"]);
+    private final function selectDatabase () {
+        return $this->link->select_db($_ENV["DB_DATABASE"]);
     }
 
     // create our default database
@@ -76,7 +76,9 @@ class database {
     public final function addStocks ($imageData): void {
         // var_dump($imageData);
         $this->connect();
-        $this->createDatabase();
+        if (!$this->selectDatabase()) {
+            $this->createDatabase();
+        }
         $this->selectDatabase();
         $this->recreateStockTable();
         for ($i = 0; $i < sizeof($imageData); $i++) {
@@ -87,7 +89,13 @@ class database {
 
     public final function fetchStock ($stockName): array {
         $this->connect();
-        $this->selectDatabase();
+        if (!$this->selectDatabase()) {
+            $this->createDatabase();
+            $this->selectDatabase();
+            $this->recreateStockTable();
+        } else {
+            $this->selectDatabase();
+        }
         $query = $this->link->prepare(<<<EOL
             SELECT * FROM stock
             WHERE (stock_name = ?)
@@ -102,7 +110,13 @@ class database {
 
     public final function fetchCategories (): array {
         $this->connect();
-        $this->selectDatabase();
+        if (!$this->selectDatabase()) {
+            $this->createDatabase();
+            $this->selectDatabase();
+            $this->recreateStockTable();
+        } else {
+            $this->selectDatabase();
+        }
         $query = $this->link->prepare(<<<EOL
             SELECT stock_name, MAX(image_path) FROM stock
             WHERE (in_stock != 0)

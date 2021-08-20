@@ -28,7 +28,7 @@ return call_user_func(function () {
     }
 
     if ($uri === "/generate") {
-        require_once __DIR__ . "/utils/generate.php";
+        require_once __DIR__ . "/views/generate.php";
         return;
     }
  

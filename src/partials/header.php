@@ -9,6 +9,11 @@ $configs = include(__DIR__ . '/../utils/settings.php');
                     <?php echo $configs["name"]; ?>
                 </h1>
             </a>
+            <a class="banner-heading" href="/generate">
+                <h1 class="banner-actual">
+                    Generate
+                </h1>
+            </a>
         </div>
     </div>
 </header>
